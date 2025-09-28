@@ -1,0 +1,105 @@
+"use client";
+
+import { useState, useMemo } from 'react';
+import { AppLayout } from '@/components/layout/app-layout';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { DataTable } from '@/components/ui/data-table';
+import { mockUsers } from '@/lib/mock-data';
+import type { User } from '@/lib/types';
+import { Users, ShieldAlert, PlusCircle } from 'lucide-react';
+// 🚨 CAMINHO CRÍTICO: Verifique se a pasta é 'usuarios' (minúsculo)
+import { NewUserDialog } from '@/components/usuarios/NewUserDialog'; 
+
+// --- FUNÇÕES AUXILIARES ---
+const roleVariant = (role: string): "default" | "concluido" | "recusado" | "em_andamento" => {
+  switch (role) {
+    case "admin": return "recusado";
+    case "vendedor": return "em_andamento";
+    case "motorista": return "concluido";
+    default: return "default";
+  }
+}
+
+// --- DEFINIÇÃO DAS COLUNAS DA DATATABLE ---
+const columns = [
+  {
+    accessorKey: "name",
+    header: "Nome",
+  },
+  {
+    accessorKey: "email",
+    header: "Email de Login",
+  },
+  {
+    accessorKey: "role",
+    header: "Perfil",
+    cell: ({ row }: { row: any }) => (
+      <Badge variant={roleVariant(row.original.role as string)}>
+        {row.original.role.toUpperCase()}
+      </Badge>
+    ),
+  },
+  {
+    accessorKey: "id",
+    header: "ID",
+    cell: ({ row }: { row: any }) => `#${row.original.id.toUpperCase()}`,
+  },
+];
+
+// --- COMPONENTE PRINCIPAL ---
+export default function AdminUsuariosPage() {
+    // Estado para a lista de usuários
+    const [allUsers, setAllUsers] = useState<User[]>(mockUsers); 
+
+    // Handler para adicionar novo usuário
+    const handleNewUser = (newUserData: any) => { 
+        const newUser: User = {
+            id: newUserData.id,
+            name: newUserData.name,
+            email: newUserData.email,
+            role: newUserData.role,
+            isPendingApproval: false,
+            isActive: true,
+            empresaId: "empresa-1",
+            avatarUrl: "/avatars/default.png", 
+            createdAt: new Date(), 
+        };
+        setAllUsers(prev => [newUser, ...prev]);
+    }
+  
+  // Dados atualizados para a tabela
+  const usersData = useMemo(() => allUsers, [allUsers]);
+
+  return (
+    <AppLayout>
+      <div className="p-8 max-w-7xl mx-auto space-y-6">
+        
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold flex items-center">
+            <ShieldAlert className="h-7 w-7 mr-3 text-red-600" />
+            Gestão de Usuários (Admin)
+          </h1>
+          {/* 💥 USO DO MODAL: Isso renderiza o botão funcional */}
+          <NewUserDialog onSuccess={handleNewUser} /> 
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Lista Completa de Usuários</CardTitle>
+            <CardDescription>
+                Esta tela é visível apenas para usuários com o perfil 'admin'.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <DataTable 
+                columns={columns} 
+                data={usersData} 
+                filterColumn="name" 
+            />
+          </CardContent>
+        </Card>
+      </div>
+    </AppLayout>
+  );
+}

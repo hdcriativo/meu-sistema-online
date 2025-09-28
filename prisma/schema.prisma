@@ -1,0 +1,37 @@
+// Este é o seu arquivo de schema do Prisma.
+// Para saber mais, consulte a documentação: https://pris.ly/d/prisma-schema
+
+// O gerador prisma-client-js é necessário para gerar o Prisma Client,
+// que será usado para interagir com o seu banco de dados no aplicativo Next.js.
+generator client {
+provider = "prisma-client-js"
+}
+
+// O datasource db conecta seu aplicativo ao banco de dados.
+// Ele usa a variável de ambiente que você forneceu no arquivo .env.
+datasource db {
+provider = "postgresql"
+url      = env("DATABASE_URL")
+}
+
+// --- Schema Placeholder para ConcreteFlow ---
+// Este modelo representa um registro de lançamento de concreto.
+// Você pode expandir este modelo ou adicionar novos (ex: Usuario, Obra, Lote) conforme necessário.
+model ConcretePour {
+// Um identificador único para cada lançamento
+id           String    @id @default(uuid())
+// Nome descritivo ou identificador do lançamento (ex: "Laje A", "Fundação 1")
+pourName     String
+// Volume em metros cúbicos (m³)
+volumeM3     Float
+// Data e hora em que o registro foi criado
+createdAt    DateTime  @default(now())
+// Data e hora em que o lançamento ocorreu fisicamente
+pourDate     DateTime
+// Detalhes da localização (opcional)
+location     String?
+// Status atual (ex: Pendente, Em Andamento, Concluído, Falhou)
+status       String    @default("Pendente")
+// Exemplo de relacionamento com usuário (se você implementar autenticação mais tarde)
+// userId String?
+}

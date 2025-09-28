@@ -1,0 +1,123 @@
+{
+  "host": "http://localhost:3000",
+  "generatedAt": "2025-09-27T23:22:02.843Z",
+  "results": [
+    {
+      "route": "/activate/[token]",
+      "testPath": "/activate/SAMPLE_TOKEN",
+      "url": "http://localhost:3000/activate/SAMPLE_TOKEN",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/activate/SAMPLE_TOKEN failed, reason: ",
+      "elapsed": 86
+    },
+    {
+      "route": "/admin/cadastros-pendentes",
+      "testPath": "/admin/cadastros-pendentes",
+      "url": "http://localhost:3000/admin/cadastros-pendentes",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/admin/cadastros-pendentes failed, reason: ",
+      "elapsed": 6
+    },
+    {
+      "route": "/agendamentos",
+      "testPath": "/agendamentos",
+      "url": "http://localhost:3000/agendamentos",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/agendamentos failed, reason: ",
+      "elapsed": 3
+    },
+    {
+      "route": "/ativar-conta",
+      "testPath": "/ativar-conta",
+      "url": "http://localhost:3000/ativar-conta",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/ativar-conta failed, reason: ",
+      "elapsed": 5
+    },
+    {
+      "route": "/chat",
+      "testPath": "/chat",
+      "url": "http://localhost:3000/chat",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/chat failed, reason: ",
+      "elapsed": 3
+    },
+    {
+      "route": "/clientes",
+      "testPath": "/clientes",
+      "url": "http://localhost:3000/clientes",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/clientes failed, reason: ",
+      "elapsed": 4
+    },
+    {
+      "route": "/configuracoes",
+      "testPath": "/configuracoes",
+      "url": "http://localhost:3000/configuracoes",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/configuracoes failed, reason: ",
+      "elapsed": 3
+    },
+    {
+      "route": "/entregas",
+      "testPath": "/entregas",
+      "url": "http://localhost:3000/entregas",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/entregas failed, reason: ",
+      "elapsed": 7
+    },
+    {
+      "route": "/financeiro",
+      "testPath": "/financeiro",
+      "url": "http://localhost:3000/financeiro",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/financeiro failed, reason: ",
+      "elapsed": 12
+    },
+    {
+      "route": "/obras",
+      "testPath": "/obras",
+      "url": "http://localhost:3000/obras",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/obras failed, reason: ",
+      "elapsed": 4
+    },
+    {
+      "route": "/orcamentos",
+      "testPath": "/orcamentos",
+      "url": "http://localhost:3000/orcamentos",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/orcamentos failed, reason: ",
+      "elapsed": 3
+    },
+    {
+      "route": "/relatorios",
+      "testPath": "/relatorios",
+      "url": "http://localhost:3000/relatorios",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/relatorios failed, reason: ",
+      "elapsed": 8
+    },
+    {
+      "route": "/",
+      "testPath": "/",
+      "url": "http://localhost:3000/",
+      "status": null,
+      "ok": false,
+      "bodySnippet": "request to http://localhost:3000/ failed, reason: ",
+      "elapsed": 4
+    }
+  ]
+}
