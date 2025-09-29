@@ -1,21 +1,69 @@
 // src/lib/firebase.js
 
-// ... (todo o código que corrigimos) ...
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { 
+  getAuth, 
+  signInAnonymously, 
+  signInWithCustomToken, 
+  setPersistence, 
+  browserSessionPersistence 
+} from 'firebase/auth';
 
-const firebaseConfig = CORRECT_FIREBASE_CONFIG; // Ou como você deixou na última correção
-export const appId = CORRECT_APP_ID; // Ou como você deixou na última correção
+// ----------------------------------------------------------------------
+// CONFIGURAÇÃO VIA VARIÁVEIS DE AMBIENTE
+// ----------------------------------------------------------------------
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+};
 
-// Adiciona logs de debug MUITO IMPORTANTES
-console.log(`%c[Firebase Init] --- Iniciando com configuração forçada ---`, 'color: yellow; background: blue; font-weight: bold;');
-console.log(`%c[Firebase Init] App ID: ${appId}`, 'color: yellow;');
-console.log(`%c[Firebase Init] Project ID: ${firebaseConfig.projectId}`, 'color: yellow;');
-console.log(`%c[Firebase Init] apiKey usada: ${firebaseConfig.apiKey}`, 'color: yellow;');
-console.log(`%c[Firebase Init] ---------------------------------------`, 'color: yellow; background: blue; font-weight: bold;');
+export const appId = process.env.NEXT_PUBLIC_FIREBASE_APP_ID || 'default-app';
 
-debugger; // <-- ADICIONE ESTA LINHA AQUI!
-
+// ----------------------------------------------------------------------
+// INICIALIZAÇÃO
+// ----------------------------------------------------------------------
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
-// ... (resto do seu código) ...
+// ----------------------------------------------------------------------
+// DEBUG (somente em desenvolvimento)
+// ----------------------------------------------------------------------
+if (process.env.NODE_ENV !== 'production') {
+  console.log('[Firebase Init] Project ID:', firebaseConfig.projectId);
+  console.log('[Firebase Init] App ID:', appId);
+  console.log('[Firebase Init] apiKey usada:', firebaseConfig.apiKey);
+}
+
+// ----------------------------------------------------------------------
+// AUTENTICAÇÃO
+// ----------------------------------------------------------------------
+export async function ensureAuth() {
+  try {
+    await setPersistence(auth, browserSessionPersistence);
+
+    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+      const userCredential = await signInWithCustomToken(auth, __initial_auth_token);
+      return userCredential.user.uid;
+    } else {
+      const userCredential = await signInAnonymously(auth);
+      return userCredential.user.uid;
+    }
+  } catch (error) {
+    console.error("[Auth Error] Falha na autenticação:", error);
+    return auth.currentUser?.uid || crypto.randomUUID();
+  }
+}
+
+// ----------------------------------------------------------------------
+// COLEÇÃO PRIVADA DO USUÁRIO
+// ----------------------------------------------------------------------
+export const getPrivateCollectionPath = (userId) => {
+  return `artifacts/${appId}/users/${userId}/concrete_batches`;
+};
