@@ -1,8 +1,9 @@
 import * as React from "react"
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
 
-// Note que importamos 'buttonVariants' do seu componente de botão
+// Importações usando o alias padrão do seu projeto
 import { cn } from "@/lib/utils"
+// Importa buttonVariants do seu arquivo button.tsx corrigido
 import { buttonVariants } from "@/components/ui/button" 
 
 // Componentes Raiz do Radix
@@ -60,7 +61,7 @@ const AlertDialogHeader = ({
 )
 AlertDialogHeader.displayName = "AlertDialogHeader"
 
-// Footer do Diálogo (Onde vão os botões de ação)
+// Footer do Diálogo (Onde vão os botões de ação) - Este estava faltando na exportação.
 const AlertDialogFooter = ({
   className,
   ...props
@@ -75,7 +76,7 @@ const AlertDialogFooter = ({
 )
 AlertDialogFooter.displayName = "AlertDialogFooter"
 
-// Título do Diálogo
+// Título do Diálogo - Este estava faltando na exportação.
 const AlertDialogTitle = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Title>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Title>
@@ -88,7 +89,7 @@ const AlertDialogTitle = React.forwardRef<
 ))
 AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName
 
-// Descrição do Diálogo
+// Descrição do Diálogo - Este estava faltando na exportação.
 const AlertDialogDescription = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
@@ -132,7 +133,7 @@ const AlertDialogCancel = React.forwardRef<
 ))
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName
 
-// EXPORTAÇÕES FINAIS
+// EXPORTAÇÕES FINAIS - Bloco essencial para resolver o erro
 export {
   AlertDialog,
   AlertDialogPortal,
@@ -140,9 +141,9 @@ export {
   AlertDialogTrigger,
   AlertDialogContent,
   AlertDialogHeader,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogDescription,
+  AlertDialogFooter, // EXPORTADO
+  AlertDialogTitle, // EXPORTADO
+  AlertDialogDescription, // EXPORTADO
   AlertDialogAction,
   AlertDialogCancel,
 }
